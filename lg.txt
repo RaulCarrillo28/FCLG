@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Family Club LG</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 20px;
+            color: #333;
+            background-color: #eeebe3; /* Color de fondo solicitado */
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: #0066cc;
+            text-align: center;
+        }
+        h2 {
+            font-size: 18px;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            color: #0066cc;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        input:focus, select:focus {
+            border-color: #0066cc;
+            box-shadow: 0 0 0 2px rgba(0,102,204,0.2);
+            outline: none;
+        }
+        .checkbox-group {
+            margin: 15px 0;
+        }
+        .checkbox-group label {
+            font-weight: normal;
+            display: flex;
+            align-items: flex-start;
+        }
+        .checkbox-group input {
+            margin-right: 10px;
+            margin-top: 3px;
+        }
+        .required {
+            color: red;
+        }
+        .password-requirements {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        .btn {
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            width: 100%;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .btn:hover {
+            background-color: #0052a3;
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #666;
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+        .footer-links a {
+            margin: 0 10px;
+            color: #0066cc;
+            text-decoration: none;
+        }
+        .whatsapp-verify {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 10px;
+            width: 100%;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            transform: translateY(-2px);
+        }
+        .whatsapp-btn:active {
+            transform: translateY(0);
+        }
+        .whatsapp-btn i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        .birthday-group {
+            display: flex;
+            gap: 10px;
+        }
+        .birthday-group > div {
+            flex: 1;
+        }
+        .verification-code {
+            display: none;
+            margin-top: 15px;
+        }
+        .code-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .code-input input {
+            width: 45px;
+            height: 45px;
+            text-align: center;
+            font-size: 18px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        .code-input input:focus {
+            border-color: #25D366;
+            box-shadow: 0 0 0 2px rgba(37,211,102,0.2);
+        }
+        .status-message {
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            .birthday-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Complete los datos</h1>
+        
+        <form id="registrationForm">
+            <h2>Como electrónico*</h2>
+            
+            <div class="form-group">
+                <label for="email">Ingrese su correo electrónico <span class="required">*</span></label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="nombre">Nombre <span class="required">*</span></label>
+                <input type="text" id="nombre" name="nombre" placeholder="Su Nombre" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="apellido">Apellido <span class="required">*</span></label>
+                <input type="text" id="apellido" name="apellido" placeholder="Su Apellido" required>
+            </div>
+            
+            <div class="form-group">
+                <label>Fecha de cumpleaños <span class="required">*</span></label>
+                <div class="birthday-group">
+                    <div>
+                        <label for="dia">Día</label>
+                        <input type="text" id="dia" name="dia" placeholder="DD" maxlength="2" required>
+                    </div>
+                    <div>
+                        <label for="mes">Mes</label>
+                        <select id="mes" name="mes" required>
+                            <option value="">Seleccione</option>
+                            <option value="1">Enero</option>
+                            <option value="2">Febrero</option>
+                            <option value="3">Marzo</option>
+                            <option value="4">Abril</option>
+                            <option value="5">Mayo</option>
+                            <option value="6">Junio</option>
+                            <option value="7">Julio</option>
+                            <option value="8">Agosto</option>
+                            <option value="9">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="anio">Año</label>
+                        <input type="text" id="anio" name="anio" placeholder="AAAA" maxlength="4" required>
+                    </div>
+                </div>
+            </div>
+            
+            <h2>Crear contraseña <span class="required">*</span></h2>
+            
+            <div class="form-group">
+                <label for="password">Su Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="********" required>
+                <div class="password-requirements">
+                    <p>Debe contener al menos 8 caracteres, incluyendo letras mayúsculas y minúsculas, y números.</p>
+                    <p>No puede ser similar a su correo electrónico.</p>
+                    <p>No puede contener patrones o secuencias en serie (ej: Qwerty, ABC, 123)</p>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="confirmPassword">Confirmar contraseña <span class="required">*</span></label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirmar su contraseña" required>
+            </div>
+            
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" name="terms" required>
+                    Acepto las <a href="#">Condiciones de uso</a> <span class="required">*</span>
+                </label>
+            </div>
+            
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" name="privacy" required>
+                    He leído y comprendo la <a href="#">Política de privacidad</a> y la <a href="#">Política de cookies</a>. <span class="required">*</span>
+                </label>
+            </div>
+            
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" name="marketing">
+                    Otorga consentimiento para ser contactado por LGF y sus afiliados sobre las últimas noticias y ofertas especiales por correo electrónico, SMS, notificaciones automáticas, llamadas telefónicas, sitios de redes sociales u otras formas de mensajes electrónicos.
+                </label>
+                <p style="font-size: 14px; color: #666; margin-left: 25px;">
+                    Puedo cambiar de opinión en cualquier momento siguiendo las instrucciones proporcionadas en cada canal de comunicación, incluido, entre otros, el correo electrónico y de acuerdo con la <a href="#">Política de privacidad</a> de LGF.
+                </p>
+            </div>
+            
+            <!-- Sección de verificación por WhatsApp -->
+            <div class="whatsapp-verify">
+                <h3>Verificación por WhatsApp</h3>
+                <p>Para completar su registro, necesitamos verificar su número de teléfono a través de WhatsApp.</p>
+                
+                <div class="form-group">
+                    <label for="phone">Número de teléfono <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="phone" placeholder="+51 XXX XXX XXX" required>
+                </div>
+                
+                <button type="button" class="whatsapp-btn" id="whatsappVerifyBtn">
+                    <i>📱</i> Enviar código de verificación por WhatsApp
+                </button>
+                
+                <div id="verificationCodeSection" class="verification-code">
+                    <label for="verificationCode">Código de verificación <span class="required">*</span></label>
+                    <div class="code-input">
+                        <input type="text" maxlength="1" id="code1" class="code-digit">
+                        <input type="text" maxlength="1" id="code2" class="code-digit">
+                        <input type="text" maxlength="1" id="code3" class="code-digit">
+                        <input type="text" maxlength="1" id="code4" class="code-digit">
+                        <input type="text" maxlength="1" id="code5" class="code-digit">
+                        <input type="text" maxlength="1" id="code6" class="code-digit">
+                    </div>
+                    <div id="verificationStatus" class="status-message"></div>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn" id="submitBtn" disabled>Completar registro</button>
+        </form>
+        
+        <div class="footer">
+            <div class="footer-links">
+                <a href="#">Condiciones de Uso del Servicio Family Club</a>
+                <a href="#">Política de privacidad</a>
+                <a href="#">Política de cookies</a>
+                <a href="#">Protección de datos</a>
+                <a href="#">LEGAL</a>
+                <a href="#">Accesibilidad</a>
+            </div>
+            <p>Copyright © 2009-2025 LG Electronics. Todos los Derechos Reservados.</p>
+            <p>Esta es la página oficial de LG Electronics. Si desea conectarse a LG Corp. u otras filiales de LG, haga clic <a href="#">aquí</a>.</p>
+            <p>LG ELECTRÓNICS PERU SA - 20375755344<br>
+            Av. Republica de Colombia 791 Urb. Chacarilla de Santa Cruz, San Isidro, Lima, Perú</p>
+        </div>
+    </div>
+
+    <script>
+        // Generar código de verificación aleatorio
+        function generateVerificationCode() {
+            return Math.floor(100000 + Math.random() * 900000).toString();
+        }
+        
+        // Manejar el envío del código por WhatsApp
+        document.getElementById('whatsappVerifyBtn').addEventListener('click', function() {
+            const phone = document.getElementById('phone').value;
+            if (!phone) {
+                showStatus('Por favor, ingrese su número de teléfono primero.', 'error');
+                return;
+            }
+            
+            // Generar código de verificación
+            const verificationCode = generateVerificationCode();
+            sessionStorage.setItem('verificationCode', verificationCode);
+            
+            // Formatear el número para WhatsApp (eliminar espacios y caracteres especiales)
+            const formattedPhone = phone.replace(/\D/g, '');
+            
+            // Crear el mensaje de WhatsApp
+            const message = `Hola, este es su código de verificación para completar su registro en LG Family Club: ${verificationCode}. Por favor, ingrese este código en el formulario de registro.`;
+            const encodedMessage = encodeURIComponent(message);
+            
+            // Crear el enlace de WhatsApp
+            const whatsappUrl = `https://wa.me/${formattedPhone}?text=${encodedMessage}`;
+            
+            // Abrir WhatsApp en una nueva ventana
+            window.open(whatsappUrl, '_blank');
+            
+            // Mostrar la sección de ingreso del código
+            document.getElementById('verificationCodeSection').style.display = 'block';
+            showStatus('Se ha enviado un código de verificación a su WhatsApp. Por favor, ingréselo a continuación.', 'success');
+            
+            // Enfocar el primer campo del código
+            document.getElementById('code1').focus();
+        });
+        
+        // Manejar la entrada del código de verificación
+        const codeInputs = document.querySelectorAll('.code-digit');
+        codeInputs.forEach((input, index) => {
+            input.addEventListener('input', function() {
+                // Mover al siguiente campo si se ingresa un dígito
+                if (this.value.length === 1 && index < codeInputs.length - 1) {
+                    codeInputs[index + 1].focus();
+                }
+                
+                // Verificar si todos los campos están llenos
+                const allFilled = Array.from(codeInputs).every(input => input.value.length === 1);
+                if (allFilled) {
+                    verifyCode();
+                }
+            });
+            
+            // Permitir navegación con teclas de flecha y borrado
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
+                    codeInputs[index - 1].focus();
+                } else if (e.key === 'ArrowLeft' && index > 0) {
+                    codeInputs[index - 1].focus();
+                } else if (e.key === 'ArrowRight' && index < codeInputs.length - 1) {
+                    codeInputs[index + 1].focus();
+                }
+            });
+        });
+        
+        // Verificar el código ingresado
+        function verifyCode() {
+            const enteredCode = Array.from(codeInputs).map(input => input.value).join('');
+            const storedCode = sessionStorage.getItem('verificationCode');
+            
+            if (enteredCode === storedCode) {
+                showStatus('¡Código verificado correctamente! Ya puede completar su registro.', 'success');
+                document.getElementById('submitBtn').disabled = false;
+            } else {
+                showStatus('Código incorrecto. Por favor, verifique e intente nuevamente.', 'error');
+                // Limpiar campos
+                codeInputs.forEach(input => input.value = '');
+                codeInputs[0].focus();
+            }
+        }
+        
+        // Mostrar mensajes de estado
+        function showStatus(message, type) {
+            const statusElement = document.getElementById('verificationStatus');
+            statusElement.textContent = message;
+            statusElement.className = `status-message ${type}`;
+            statusElement.style.display = 'block';
+        }
+        
+        // Manejar el envío del formulario
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validaciones básicas
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Las contraseñas no coinciden.');
+                return;
+            }
+            
+            // Aquí iría la lógica para enviar el formulario al servidor
+            alert('¡Registro completado exitosamente! Su cuenta ha sido verificada por WhatsApp.');
+            
+            // Limpiar el formulario
+            this.reset();
+            document.getElementById('verificationCodeSection').style.display = 'none';
+            document.getElementById('verificationStatus').style.display = 'none';
+            document.getElementById('submitBtn').disabled = true;
+            sessionStorage.removeItem('verificationCode');
+        });
+    </script>
+</body>
+</html>
